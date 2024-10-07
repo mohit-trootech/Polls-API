@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "debug_toolbar",
     "django_markdown_model",
+    "demo.apps.DemoConfig",
 ]
 
 # Middlewares
@@ -35,7 +36,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # "utils.ApiStatMiddleware.ApiStatMiddleware",
+    "utils.ApiStatMiddleware.ApiStatMiddleware",
 ]
 
 # Middlewares

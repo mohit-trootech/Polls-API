@@ -45,3 +45,7 @@ class Choice(models.Model):
     def __str__(self):
         """model representation"""
         return self.choice_text
+
+
+class ApiStats(models.Model):
+    hit = models.IntegerField(default=0)
