@@ -25,6 +25,11 @@ class Poll(TimeStampedModel, TitleSlugDescriptionModel):
         "User", on_delete=models.CASCADE, related_name=ModelConstants.USERS.value
     )
 
+    @property
+    def get_total_votes(self):
+        """get total votes"""
+        return sum([vote.votes for vote in self.choices.all()])
+
     def __str__(self):
         """model representation"""
         return self.title

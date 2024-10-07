@@ -14,4 +14,5 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("", index_view, name=Urls.INDEX.value),
     path("about/", about_view, name=Urls.ABOUT.value),
+    path("demo/", include("demo.urls")),
 ] + debug_toolbar_urls()

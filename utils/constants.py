@@ -49,6 +49,7 @@ class Templates(Enum):
 
     INDEX = "polls_api/index.html"
     ABOUT = "polls_api/about.html"
+    DEMO = "demo/index.html"
 
 
 # Urls & Url Reverse Constants
@@ -58,6 +59,7 @@ class Urls(Enum):
     ABOUT = "about"
     USERS = "users"
     CHOICES = "choices"
+    DEMO = "demo"
 
 
 # Other Constants

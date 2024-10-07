@@ -10,3 +10,9 @@ function handleDemoRequest(content) {
   const sampleGetRequest = document.getElementById("sampleGetRequest");
   sampleGetRequest.innerHTML = JSON.stringify(content, null, 4);
 }
+
+$(document).ready(() => {
+  /*Fetch All Polls On Document Ready */
+  const query = window.location.search;
+  getRequest(`/api/polls/${query}`, renderPolls);
+});

@@ -14,7 +14,14 @@ class PollSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Poll
-        read_only_fields = ["id", "slug", "created", "modified", "choices"]
+        read_only_fields = [
+            "id",
+            "slug",
+            "created",
+            "get_total_votes",
+            "modified",
+            "choices",
+        ]
         fields = [
             "id",
             "choices",
@@ -24,6 +31,7 @@ class PollSerializer(serializers.ModelSerializer):
             "description",
             "slug",
             "image",
+            "get_total_votes",
             "user",
         ]
         depth = True
@@ -53,9 +61,9 @@ class PollSerializer(serializers.ModelSerializer):
             choices = literal_eval(choices)
         for choice in choices:
             instance = Choice.objects.get(id=choice.get("id"))
-            if choice.get("choice_text"):
+            if choice.get("choice_text") is not None:
                 instance.choice_text = choice.get("choice_text")
-            if choice.get("votes"):
+            if "votes" in choice:
                 instance.votes = choice.get("votes")
             instance.save()
 
@@ -73,10 +81,9 @@ class PollSerializer(serializers.ModelSerializer):
         if request.query_params.get("vote"):
             self.add_vote(request.query_params.get("vote"))
             return instance
-        instance = super().update(instance, validated_data)
         if self.initial_data.get("choices"):
             self.update_choices_data(self.initial_data.get("choices"))
-        return instance
+        return super().update(instance, validated_data)
 
     def create(self, validated_data):
         poll = Poll(**validated_data)
