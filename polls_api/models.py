@@ -6,10 +6,6 @@ from uuid import uuid4
 from utils.constants import ModelConstants
 
 
-def _upload_to(self, filename):
-    return ModelConstants.UPLOAD.value.format(id=self.id, filename=filename)
-
-
 class User(AbstractUser):
     """abstract user model"""
 
@@ -23,7 +19,7 @@ class User(AbstractUser):
 class Poll(TimeStampedModel, TitleSlugDescriptionModel):
     """base polls question model"""
 
-    image = models.ImageField(upload_to=_upload_to, blank=True, null=True)
+    image = models.URLField(null=True, blank=True)
     description = MarkDownField(blank=True, null=True)
     user = models.ForeignKey(
         "User", on_delete=models.CASCADE, related_name=ModelConstants.USERS.value

@@ -38,7 +38,24 @@ class EmailConfig(Enum):
 class ModelConstants(Enum):
     """model constants"""
 
-    UPLOAD = "images/{id}/{filename}"
+    USERS = "users"
+    CHOICES = "choices"
+
+
+# Templates Path Constants
+# -----------------------------------------------------------------------------
+class Templates(Enum):
+    """Template paths constants"""
+
+    INDEX = "polls_api/index.html"
+    ABOUT = "polls_api/about.html"
+
+
+# Urls & Url Reverse Constants
+# -----------------------------------------------------------------------------
+class Urls(Enum):
+    INDEX = "index"
+    ABOUT = "about"
     USERS = "users"
     CHOICES = "choices"
 
