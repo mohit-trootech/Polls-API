@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Polls API{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'img/polls.png' %}" type="image/x-icon">
+    {% include 'ecommerce/css.html' %}
+</head>
+{% include 'ecommerce/preload.html' %}
+
+<body>
+    {% csrf_token %}
+    <div id="mainContent">
+        {% include 'ecommerce/navbar.html' %}
+        {% block content %}{% endblock %}
+        {% include 'ecommerce/footer.html' %}
+    </div>
+    {% include 'ecommerce/message.html' %}
+    <div id="triggerMessage"></div>
+</body>
+{% include 'ecommerce/postload.html' %}
+
+</html>
