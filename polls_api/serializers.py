@@ -1,18 +1,44 @@
 from polls_api.models import Poll, Choice
 from rest_framework import serializers
+from django.contrib.auth.models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    def validate_first_name(self, value):
+        if not value.isalpha():
+            raise serializers.ValidationError("Data must be in alphabets.")
+        return value
+
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "is_active",
+            "last_login",
+            "date_joined",
+        ]
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
-        fields = "__all__"
+        fields = ["id", "title", "votes"]
 
 
 class DynamicModelSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        fields = self.context["request"].query_params or None
+        fields = self.context["request"].query_params.get("fields")
         if fields is not None:
             allowed = set(fields.values())
             existing = set(self.fields)
@@ -48,58 +74,34 @@ class PollSerializer(DynamicModelSerializer):
         ]
         depth = True
 
-    @staticmethod
-    def handle_choices_initital_data(choices, poll):
-        """handle choices by creating creates for poll instance"""
-        if isinstance(choices, str):
-            from ast import literal_eval
-
-            choices = literal_eval(choices)
-        choices_data = []
-        limit = 0
-        for choice in choices:
-            if limit < 4:
-                limit += 1
-                choices_data.append(Choice(poll=poll, choice_text=choice))
-            else:
-                break
-        Choice.objects.bulk_create(choices_data)
-
-    @staticmethod
-    def update_choices_data(choices):
-        if isinstance(choices, str):
-            from ast import literal_eval
-
-            choices = literal_eval(choices)
-        for choice in choices:
-            instance = Choice.objects.get(id=choice.get("id"))
-            if choice.get("choice_text") is not None:
-                instance.choice_text = choice.get("choice_text")
-            if "votes" in choice:
-                instance.votes = choice.get("votes")
-            instance.save()
-
-    @staticmethod
-    def add_vote(id):
-        """add vote to vote choice"""
-        from django.db.models import F
-
-        choice = Choice.objects.get(id=id)
-        choice.votes = F("votes") + 1
-        choice.save(update_fields=["votes"])
+    def create(self, validated_data):
+        instance = super().create(validated_data)
+        choices = self.initial_data.get("choices")
+        if choices:
+            choices = eval(choices) if isinstance(choices, str) else choices
+            for choice in choices:
+                serializer = ChoiceSerializer(
+                    data={"title": choice, "poll": instance.id}
+                )
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+        return instance
 
     def update(self, instance, validated_data):
-        request = self.context["request"]
-        if request.query_params.get("vote"):
-            self.add_vote(request.query_params.get("vote"))
-            return instance
-        if self.initial_data.get("choices"):
-            self.update_choices_data(self.initial_data.get("choices"))
-        return super().update(instance, validated_data)
+        instance = super().update(instance, validated_data)
+        if "vote" in self.context["request"].query_params:
 
-    def create(self, validated_data):
-        poll = Poll(**validated_data)
-        poll.save()
-        if self.initial_data.get("choices"):
-            self.handle_choices_initital_data(self.initial_data.get("choices"), poll)
-        return poll
+            vote = self.context["request"].query_params["vote"]
+            vote = eval(vote) if isinstance(vote, str) else vote
+            try:
+                choice = Choice.objects.get(id=vote)
+                serializer = ChoiceSerializer(
+                    choice, data={"votes": choice.votes + 1}, partial=True
+                )
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+            except Choice.DoesNotExist:
+                from rest_framework.exceptions import NotFound
+
+                raise NotFound("Choice Not Found")
+        return instance

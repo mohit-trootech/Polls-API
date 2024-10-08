@@ -13,6 +13,8 @@ function handleDemoRequest(content) {
 
 $(document).ready(() => {
   /*Fetch All Polls On Document Ready */
-  const query = window.location.search;
-  getRequest(`/api/polls/${query}`, renderPolls);
+  if (window.location.href.includes("/demo/")) {
+    const query = window.location.search;
+    getRequest(`/api/polls/${query}`, renderPolls);
+  }
 });

@@ -12,6 +12,8 @@ class ApiStatMiddleware:
     def __call__(self, request):
         if self.PATH in request.path:
             stats = ApiStats.objects.first()
+            if not stats:
+                stats = ApiStats.objects.create()
             stats.hit = F("hit") + 1
             stats.save(update_fields=["hit"])
         response = self.get_response(request)

@@ -64,6 +64,12 @@ class Urls(Enum):
 
 # Other Constants
 # -----------------------------------------------------------------------------
+FORM_LABELS = {
+    "first_name": "Enter First Name",
+    "last_name": "Enter Last Name",
+    "email": "Enter Email Name",
+}
+
 EMPTY_STR = ""
 FORM_CLASS = "input input-bordered w-full"
 FORM_CLASS_FILE = "file-input file-input-bordered w-full"

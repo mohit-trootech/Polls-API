@@ -3,7 +3,6 @@ from os import path
 from utils.constants import Settings, EmailConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-AUTH_USER_MODEL = "polls_api.User"
 SECRET_KEY = Settings.SECRET_KEY.value
 ROOT_URLCONF = Settings.ROOT_URL.value
 APPEND_SLASH = True
@@ -164,5 +163,5 @@ CACHES = {
 # Rest Framework Configuration
 # https://www.django-rest-framework.org/
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    # "DEFAULT_PERMISSION_CLASSES": ["utils.custom_permissions.ApiKeyPermission"],
 }

@@ -4,7 +4,6 @@ function renderPolls(content) {
   /*Render Polls in Content */
   const pollsItems = document.getElementById("pollsItems");
   loadPagination(content);
-  console.log(content);
   if (content.count > 0) {
     content.results.forEach((elem) => {
       pollsItems.innerHTML += `  <div class="card card-side bg-base-100 shadow-xl border  hover:bg-base-200">
@@ -67,6 +66,6 @@ function vote(url) {
 }
 
 function voteUpdate(content) {
-  console.log(content);
+  // console.log(content);
   updateChoices(`poll_${content.id}`, content, content.choices);
 }

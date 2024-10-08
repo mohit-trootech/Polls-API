@@ -1,19 +1,7 @@
 from django.db import models
 from django_extensions.db.models import TimeStampedModel, TitleSlugDescriptionModel
 from django_markdown_model.fields import MarkDownField
-from django.contrib.auth.models import AbstractUser
-from uuid import uuid4
 from utils.constants import ModelConstants
-
-
-class User(AbstractUser):
-    """abstract user model"""
-
-    api = models.UUIDField(default=uuid4, editable=False)
-
-    def __str__(self):
-        """model representation"""
-        return self.username
 
 
 class Poll(TimeStampedModel, TitleSlugDescriptionModel):
@@ -22,7 +10,7 @@ class Poll(TimeStampedModel, TitleSlugDescriptionModel):
     image = models.URLField(null=True, blank=True)
     description = MarkDownField(blank=True, null=True)
     user = models.ForeignKey(
-        "User", on_delete=models.CASCADE, related_name=ModelConstants.USERS.value
+        "auth.User", on_delete=models.CASCADE, related_name=ModelConstants.USERS.value
     )
 
     @property
@@ -44,12 +32,12 @@ class Choice(models.Model):
     poll = models.ForeignKey(
         "Poll", on_delete=models.CASCADE, related_name=ModelConstants.CHOICES.value
     )
-    choice_text = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
     def __str__(self):
         """model representation"""
-        return self.choice_text
+        return self.title
 
 
 class ApiStats(models.Model):
