@@ -8,7 +8,19 @@ class ChoiceSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class PollSerializer(serializers.ModelSerializer):
+class DynamicModelSerializer(serializers.ModelSerializer):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        fields = self.context["request"].query_params or None
+        if fields is not None:
+            allowed = set(fields.values())
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+
+
+class PollSerializer(DynamicModelSerializer):
     choices = ChoiceSerializer(many=True, read_only=True)
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 

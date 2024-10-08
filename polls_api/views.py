@@ -1,7 +1,7 @@
 from typing import Any
 from rest_framework import permissions, viewsets
-from polls_api.serializers import PollSerializer
-from polls_api.models import Poll, User
+from polls_api.serializers import PollSerializer, ChoiceSerializer
+from polls_api.models import Poll, User, Choice
 from utils.utils import StandardPagination, get_repository_star, get_api_stats
 from django.views.generic import TemplateView
 from utils.constants import Templates
@@ -25,6 +25,11 @@ class PollViewSet(viewsets.ModelViewSet):
                 filter_params.get("orderby") if filter_params.get("orderby") else "?"
             )
         )
+
+
+class ChoiceViewSet(viewsets.ModelViewSet):
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
 
 
 class IndexView(TemplateView):
