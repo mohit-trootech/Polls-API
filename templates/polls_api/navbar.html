@@ -10,16 +10,16 @@
             </div>
             <ul tabindex="0"
                 class="menu menu-sm dropdown-content border bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                <li><a href="">Homepage</a></li>
+                <li><a href="{% url 'index' %}">Homepage</a></li>
                 <li><a href="/api/">Api Endpoints</a></li>
-                <li><a href="">Documentation</a></li>
-                <li><a href="">Demo Project</a></li>
+                <li><a href="{% url 'about' %}">Documentation</a></li>
+                <li><a href="{% url 'demo' %}">Demo Project</a></li>
             </ul>
         </div>
 
     </div>
     <div class="navbar-center">
-        <a href="" class="btn btn-ghost text-xl">Polls API</a>
+        <a href="{% url 'index' %}" class="btn btn-ghost text-xl">Polls API</a>
     </div>
     <div class="navbar-end">
         <div tabindex="0" role="button" class="me-5">
@@ -36,12 +36,14 @@
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                 <li>
-                    <a href="{% url 'profile' request.user.pk %}" class="justify-between">
+                    <a href="{% url 'profile' %}" class="justify-between">
                         Profile
                     </a>
                 </li>
+                {% if request.user.is_superuser %}
+                <li><a href="/admin/">Admin</a></li>
+                {%endif%}
                 <li><a href="">Logout</a></li>
-                <li><a href="{% url 'logout' %}">Logout All Sessions</a></li>
             </ul>
         </div>
         {% else %}

@@ -7,20 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Polls API{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'img/polls.png' %}" type="image/x-icon">
-    {% include 'ecommerce/css.html' %}
+    {% include 'polls_api/css.html' %}
 </head>
-{% include 'ecommerce/preload.html' %}
+{% include 'polls_api/preload.html' %}
 
 <body>
     {% csrf_token %}
     <div id="mainContent">
-        {% include 'ecommerce/navbar.html' %}
+        {% include 'polls_api/navbar.html' %}
         {% block content %}{% endblock %}
-        {% include 'ecommerce/footer.html' %}
+        {% include 'polls_api/footer.html' %}
     </div>
-    {% include 'ecommerce/message.html' %}
+    {% include 'polls_api/message.html' %}
     <div id="triggerMessage"></div>
 </body>
-{% include 'ecommerce/postload.html' %}
+{% include 'polls_api/postload.html' %}
 
 </html>

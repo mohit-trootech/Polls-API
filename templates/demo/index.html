@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}{% load custom_tags %}
+{% block title %}Demo{% endblock %}
+
+{% block content %}
+<div class="mx-14 my-5 ">
+    <div class="flex justify-end items-center mx-10 mt-10 mb-5">
+        <select class="select select-sm select-primary w-70 max-w-xs me-3" id="sortSelect">
+            <option value="?" selected>Random</option>
+            <option value="created">Oldest First</option>
+            <option value="-created">Newest First</option>
+        </select>
+        <button class="btn btn-sm btn-primary" onclick="filterData()">Filter</button>
+    </div>
+    <div class="grid grid-cols-2 gap-4" id="pollsItems">
+
+    </div>
+    <div class="join grid grid-cols-2 w-4/5 my-5 mx-auto">
+        <a role="button" class="join-item btn btn-outline" id="previousBtn" href="">Previous page</a>
+        <a role="button" class="join-item btn btn-primary" id="nextBtn" href="">Next</a>
+    </div>
+</div>
+{% endblock %}

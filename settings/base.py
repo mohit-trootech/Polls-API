@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "debug_toolbar",
     "django_markdown_model",
+    "demo.apps.DemoConfig",
 ]
 
 # Middlewares
@@ -28,14 +29,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # "utils.ApiStatMiddleware.ApiStatMiddleware",
+    "utils.ApiStatMiddleware.ApiStatMiddleware",
 ]
 
 # Middlewares
@@ -163,5 +163,5 @@ CACHES = {
 # Rest Framework Configuration
 # https://www.django-rest-framework.org/
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    # "DEFAULT_PERMISSION_CLASSES": ["utils.custom_permissions.ApiKeyPermission"],
 }

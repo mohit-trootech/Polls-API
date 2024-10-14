@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl flex items-center flex-wrap mx-auto my-16">
+
+    <!--Main Col-->
+    <div id="profile"
+        class="w-full h-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl opacity-75 mx-6 lg:mx-0">
+        <div class="p-4 md:p-12 text-center lg:text-left">
+            <!-- Image for mobile view-->
+            <div class="">
+                <div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
+                    style="background-image: url('https://picsum.photos/1024/1024')"></div>
+                {% if user.get_full_name %}
+                <h1 class="text-3xl font-bold pt-8 lg:pt-0 capitalize">{{user.get_full_name}}</h1>
+                {% else %}
+                <h1 class="text-3xl font-bold pt-8 lg:pt-0 capitalize">{{user}}</h1>
+                {% endif %}
+            </div>
+            <div class="flex w-full flex-col">
+                <div class="divider">API Usage</div>
+            </div>
+            <div role="tablist" class="tabs tabs-boxed">
+                <input type="radio" name="my_tabs_1" role="tab" class="tab text-xs" aria-label="Todays"
+                    checked="checked" />
+                <div role="tabpanel" class="tab-content p-10">Todays Quote</div>
+                <input type="radio" name="my_tabs_1" role="tab" class="tab text-xs" aria-label="Previous" />
+                <div role="tabpanel" class="tab-content p-10">Previous Quotas</div>
+                <input type="radio" name="my_tabs_1" role="tab" class="tab text-xs" aria-label="API KEY" />
+                <div role="tabpanel" class="tab-content p-10">
+                    <div class="collapse">
+                        <input type="checkbox" />
+                        <div role="alert" class="alert border-1 collapse-title text-xs">
+                            <i class="fa"></i>
+                            <span>Please Keep Your API Key Secret!</span>
+                        </div>
+                        <div class="collapse-content justify-center text-center">
+                            <code class="kbd text-xs">{{user.api}}</code>
+                            <a role="button" href="{% url 'update-api' %}" class="btn btn-accent btn-md mt-3">
+                                Update Key
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-12 pb-8">
+                <button class="btn btn-accent btn-md text-white" onclick="update_profile.showModal()">
+                    Update Profile
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="w-full lg:w-2/5">
+        <img src="https://picsum.photos/1024/1024" class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
+    </div>
+</div>
+{% include 'polls_api/update-profile.html' %}
+{% endblock %}
