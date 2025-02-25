@@ -3,5 +3,170 @@
 {% block title %}About{% endblock %}
 
 {% block content %}
+<div class="container mx-auto">
+    <header class="text-center mb-6">
+        <h1 class="text-4xl font-bold">API Documentation</h1>
+        <p class="my-5 text-lg">Learn how to interact with the Polls</p>
+    </header>
+    <div class="diff rounded my-10">
+        <div class="diff-item-1">
+            <div class="bg-primary text-primary-content grid place-content-center font-black">
+                Note: Polls API required Authentication to request data check request for more details.
+            </div>
+        </div>
+        <div class="diff-item-2">
+            <div class="bg-base-200 grid place-content-center font-black">
+                Note: Polls API required Authentication to request data check request for more details.
+            </div>
+        </div>
+        <div class="diff-resizer"></div>
+    </div>
+    <div class="grid grid-cols-9 gap-4 my-10 mx-auto mx-5">
+        <div class="col-span-2 py-5 h-max sticky top-0">
+            <ul class="menu bg-base-200 rounded-box w-56">
+                <li><a href="#introduction">Introduction</a></li>
+                <li>
+                    <div>Polls</div>
+                    <ul>
+                        <li><a href="#polls">Get All Polls</a></li>
+                        <li><a href="#pagination">Pagination</a></li>
+                        <li><a href="#sorting">Sort Polls</a></li>
+                        <li><a href="#poll">Retrieve Poll</a></li>
+                        <li><a href="#create-poll">Add Poll</a></li>
+                    </ul>
+                </li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contributions">Contributions</a></li>
+                <li><a href="#license">License</a></li>
+            </ul>
+        </div>
+        <div class="col-span-7 p-4">
+            <section id="introduction" class="mb-5">
+                <h2 class="text-2xl font-semibold my-5">Using the API</h2>
+                <p class="my-5">Here’s how to request Polls API in different programming
+                    languages:
+                </p>
+            </section>
+            <section id="polls" class="mb-5">
+                <h2 class="text-2xl font-semibold my-5">Polls API Endpoints</h2>
+                <p class="text-xl font-semibold my-5">Get All Polls</p>
+                <div role="tablist" class="tabs tabs-boxed">
+                    <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Fetch" />
+                    <div role="tabpanel" class="tab-content p-10">
+                        <div class="mockup-window w-11/12 bg-base-300 border">
+                            <div class="bg-base-200 px-4 py-16">
+                                <div class="mockup-code overflow-auto">
+                                    <pre><code>let headers = new Headers();
+    headers.append('Authorization', 
+        'Basic ' + base64.encode(username + ":" + password));
+    fetch('/api/polls/', {method:'GET',
+    headers: headers,
+    })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+                                        </code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Ajax" />
+                    <div role="tabpanel" class="tab-content p-10">
+                        <div class="mockup-window w-11/12 bg-base-300 border">
+                            <div class="bg-base-200 px-4 py-16">
+                                <div class="mockup-code overflow-auto">
+                                    <pre><code>$.ajax({
+    url: "/api/polls/",
+    type: "GET",
+    headers: {
+        "X-CSRFToken": csrfToken,
+        Authorization: "Basic " + btoa(USERNAME + ":" + PASSWORD),
+    },
+    success: function (response, status, xhr) {
+        console.log(response);
+    },
+    error: function (xhr, status, error) {
+        console.error("Error occurred:", xhr.responseText, status, error);
+    },
+    });
+                                                    </code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Python" />
+                    <div role="tabpanel" class="tab-content p-10">
+                        <div class="mockup-window w-11/12 bg-base-300 border">
+                            <div class="bg-base-200 px-4 py-16">
+                                <div class="mockup-code overflow-auto">
+                                    <pre><code>from requests import get
+    response = get("http://url.domain/api/polls/", 
+        auth=(USERNAME, PASSWORD))
+    print(response.status_code)
+    print(response.json())
+                                                                </code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="pagination" class="mb-5">
+                <h2 class="text-2xl font-semibold my-5">Pagination</h2>
+                <p class="my-5">Polls data are paginated & can be handled by sending page number as query parameter
+                </p>
+                <p class="kbd">GET: /api/polls/?page={number}</p>
+                <p class="my-5">This will fetch the first page of products, limited to 10 items.</p>
+            </section>
+            <section id="sorting" class="mb-5">
+                <h2 class="text-2xl font-semibold my-5">Sorting</h2>
+                <p class="my-5">Currently Polls can be Filter on the Basis of Time Created
+                </p>
+                <p class="kbd">GET: /api/products/?page={number}&orderby=<select
+                        class="select select-xs select-secondary select-bordered ms-2 max-w-xs">
+                        <option selected>created</option>
+                        <option>-created</option>
+                        <option>?</option>
+                    </select></p>
+            </section>
+            <section id="poll" class="mb-5">
+                <h2 class="text-2xl font-semibold my-5">Retreive Poll</h2>
+                <p class="my-5">One Poll can be retreive by ID</p>
+                <p class="kbd">GET: /api/poll/{id} </p>
+                <p class="my-5">Replace {id} with the actual product ID.</p>
+            </section>
+            <section id="create-poll" class="mb-5">
+                <h2 class="text-2xl font-Productssemibold my-5">Create Product</h2>
+                <p class="my-5">A Product can be created with a POST request.</p>
+                <p class="kbd">POST: /api/poll/</p>
+                <div class="mockup-code my-5">
+                    <pre data-prefix="$"><code>{
+    title: title,
+    description: description,
+    choices: [choices],
+    };
+                    </code></pre>
+                </div>
+
+                <section id="contact" class="mb-5">
+                    <h2 class="text-2xl font-semibold my-5">Contact</h2>
+                    <p class="my-5">For any questions, please reach out to our support team at <a
+                            href="mailto:support@ecommerce.com">support@ecommerce.com</a>.</p>
+                </section>
+
+                <section id="contributions" class="mb-5">
+                    <h2 class="text-2xl font-semibold my-5">Contributions</h2>
+                    <p class="my-5">We welcome contributions! Please check our GitHub repository for more information.
+                    </p>
+                </section>
+
+                <section id="license" class="mb-5">
+                    <h2 class="text-2xl font-semibold my-5">License</h2>
+                    <p class="my-5">This API is licensed under the MIT License. See the LICENSE file for more details.
+                    </p>
+                </section>
+        </div>
+    </div>
+</div>
 {% endblock %}

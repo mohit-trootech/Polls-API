@@ -1,7 +1,81 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static %}{% load custom_tags %}
 {% block title %}Polls Api{% endblock %}
 
 {% block content %}
+<div class="p-5 min-h-screen">
+    <div class="diff rounded my-10">
+        <div class="diff-item-1">
+            <div class="bg-primary text-primary-content grid place-content-center font-black">
+                A RESTful robust API built with Django Rest Framework for managing a Ecommerce application.
+            </div>
+        </div>
+        <div class="diff-item-2">
+            <div class="bg-base-200 grid place-content-center font-black">
+                A RESTful robust API built with Django Rest Framework for managing a Ecommerce application.
+            </div>
+        </div>
+        <div class="diff-resizer"></div>
+    </div>
+    <div class="flex w-full flex-col" data-aos="slide-up">
+        <div class="divider">API Stats</div>
+    </div>
+    <div class="flex justify-center my-10 items-center">
+        <div class="stats shadow" data-aos="fade-up">
+            <div class="stat">
+                <div class="stat-figure text-secondary">
+                    <i class="fa fa-bullseye"></i>
+                </div>
+                <div class="stat-title">API Hits</div>
+                <div class="stat-value">{% format_number hit %}</div>
+                <div class="stat-desc">Oct 2024 - Today</div>
+            </div>
 
+            <div class="stat">
+                <div class="stat-figure text-secondary">
+                    <i class="fa fa-users-viewfinder"></i>
+                </div>
+                <div class="stat-title">New Users</div>
+                <div class="stat-value">{{count}}</div>
+                <a href="/accounts/login" class="stat-desc">↗︎ Registered</a>
+            </div>
+
+            <div class="stat">
+                <div class="stat-figure text-secondary">
+                    <i class="fa fa-star"></i>
+                </div>
+                <div class="stat-title">API Starts</div>
+                <div class="stat-value">{{star}}</div>
+                <a href="https://github.com/mohit-trootech/Polls-API" target="_blank" class="stat-desc">↗︎
+                    Github</a>
+            </div>
+        </div>
+    </div>
+    <div class="flex w-full flex-col" data-aos="slide-up">
+        <div class="divider">API Endpoints</div>
+    </div>
+    <div class="mockup-code" data-aos="fade-up">
+        <pre data-prefix="$">GET: Retrieve polls with pagination.<code class="kbd">/api/polls/?page={page}/</code></pre>
+        <pre data-prefix="$">POST: Create a new poll API Key Required.<code class="kbd">/api/polls/</code></pre>
+        <pre data-prefix="$">PATCH: Update a poll API Key Required. <code class="kbd">/api/polls/{id}/</code></pre>
+        <pre data-prefix="$">PUT: Replace a poll API Key Required. <code class="kbd">/api/polls/{id}/</code></pre>
+        <pre data-prefix="$">DELETE: Deletes a poll API Key Required. <code class="kbd">/api/polls/{id}/</code></pre>
+    </div>
+    <div class="flex w-full flex-col" data-aos="slide-up">
+        <div class="divider">Try Now</div>
+    </div>
+    <div class="mockup-browser bg-base-300 border" data-aos="fade-up" id="api-Example">
+        <div class="mockup-browser-toolbar">
+            <label class="input input-bordered flex items-center gap-2 px-2">
+                <input type="text" class="grow" placeholder="/api/polls/" id="getRequestInput" />
+            </label>
+            <a role="button" class="btn btn-sm mx-3 btn-primary" onclick="fetchGetRequest()">Run Script</a>
+        </div>
+        <div class="bg-base-200 flex justify-center px-4 py-16">
+            <pre id="sampleGetRequest" class="text-secondary overflow-auto">
+            <span class="loading loading-dots loading-lg"></span>
+            </pre>
+        </div>
+    </div>
+</div>
 {% endblock %}

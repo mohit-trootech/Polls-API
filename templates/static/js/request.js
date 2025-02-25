@@ -30,6 +30,7 @@ function ajaxRequest(type, url, data, callback) {
     },
     error: function (xhr, status, error) {
       console.error("Error occurred:", xhr.responseText, status, error);
+      triggerToast(xhr.responseJSON.message);
     },
   });
 }
